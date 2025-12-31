@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Eventos Canal Mercado · Mercado tipo Chamberí</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --amarillo: #f3c623;
+      --gris-oscuro: #222222;
+      --gris-medio: #4a4a4a;
+      --gris-claro: #f2f2f2;
+      --blanco: #ffffff;
+      --negro: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-claro);
+      color: var(--gris-oscuro);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.88);
+      color: var(--blanco);
+      padding: 0.8rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--amarillo);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo span {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--amarillo);
+      transition: width 0.25s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .btn-header {
+      border: 1px solid var(--amarillo);
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--amarillo);
+      color: var(--negro);
+      cursor: pointer;
+    }
+
+    .btn-header span {
+      font-size: 1.1rem;
+    }
+
+    .section {
+      padding: 2.5rem max(6vw, 2rem);
+    }
+
+    .section-alt {
+      background: var(--blanco);
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--gris-oscuro);
+      color: var(--blanco);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amarillo);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      margin: 1.1rem 0 0.7rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: var(--gris-oscuro);
+    }
+
+    h1 span.highlight {
+      background: linear-gradient(120deg, var(--amarillo), #ffe46b);
+      padding: 0.15rem 0.35rem;
+      box-decoration-break: clone;
+    }
+
+    .hero-subtitle {
+      max-width: 34rem;
+      color: var(--gris-medio);
+      font-size: 0.98rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amarillo);
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      border-radius: 999px;
+      border: none;
+      background: var(--amarillo);
+      color: var(--negro);
+      padding: 0.75rem 1.6rem;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-secondary {
+      border-radius: 999px;
+      border: 1px solid var(--gris-medio);
+      background: transparent;
+      color: var(--gris-oscuro);
+      padding: 0.7rem 1.2rem;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+    }
+
+    .hero-meta {
+      margin-top: 1.4rem;
+      font-size: 0.8rem;
+      color: var(--gris-medio);
+    }
+
+    .hero-meta strong {
+      color: var(--gris-oscuro);
+    }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-card {
+      background: var(--negro);
+      color: var(--blanco);
+      border-radius: 1.4rem;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top left, rgba(243, 198, 35, 0.4), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-market-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.85;
+    }
+
+    .hero-market-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .hero-card-tag {
+      font-size: 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.25rem 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-image {
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(0.2);
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent 60%);
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      left: 1rem;
+      bottom: 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .metric {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 0.8rem;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .metric-label {
+      font-size: 0.65rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-top: 0.15rem;
+      color: var(--amarillo);
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tagline {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      margin-bottom: 0.3rem;
+      color: var(--gris-medio);
+    }
+
+    h2.section-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      color: var(--gris-oscuro);
+    }
+
+    .section-intro {
+      max-width: 32rem;
+      font-size: 0.98rem;
+      color: var(--gris-medio);
+      margin-bottom: 2.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.8rem;
+    }
+
+    .card {
+      background: var(--blanco);
+      border-radius: 1.2rem;
+      padding: 1.4rem 1.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gris-medio);
+      margin-bottom: 0.3rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+      color: var(--gris-oscuro);
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--gris-medio);
+    }
+
+    .strip {
+      background: var(--gris-oscuro);
+      color: var(--blanco);
+      padding: 2.3rem max(6vw, 2rem);
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .strip-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .strip-text {
+      font-size: 0.92rem;
+      max-width: 32rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .strip-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+    }
+
+    .strip-metric {
+      min-width: 120px;
+    }
+
+    .strip-metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--amarillo);
+      margin-bottom: 0.1rem;
+    }
+
+    .strip-metric-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .timeline {
+      border-left: 2px solid var(--amarillo);
+      margin-top: 1rem;
+      padding-left: 1.4rem;
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .timeline-item-title {
+      font-weight: 600;
+      font-size: 0.96rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-item-text {
+      font-size: 0.9rem;
+      color: var(--gris-medio);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 0.25rem 0.8rem;
+      font-size: 0.78rem;
+      background: var(--blanco);
+    }
+
+    .cta-final {
+      text-align: center;
+    }
+
+    .cta-final h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .cta-final p {
+      max-width: 30rem;
+      margin: 0 auto 1.8rem;
+      font-size: 0.95rem;
+      color: var(--gris-medio);
+    }
+
+    .cta-final small {
+      display: block;
+      margin-top: 0.7rem;
+      font-size: 0.78rem;
+      color: var(--gris-medio);
+    }
+
+    footer {
+      padding: 1.8rem max(6vw, 2rem);
+      font-size: 0.75rem;
+      color: var(--gris-medio);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    /* Galería/imagen adicional por sección */
+    .img-inline {
+      width: 100%;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      object-fit: cover;
+    }
+
+    .img-inline-small {
+      max-width: 440px;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 0.7rem 1.2rem;
+      }
+      nav {
+        display: none;
+      }
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-right {
+        order: -1;
+        justify-content: flex-start;
+      }
+      .strip {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <!-- Usa el logo en negro desde la misma carpeta -->
+      <img src="logocmwhite.png" alt="Canal Mercado" />
+      <span>Canal Mercado</span>
+    </div>
+    <nav>
+      <a href="#porque">Por qué el mercado</a>
+      <a href="#formato">Formato evento</a>
+      <a href="#casos">Casos de uso</a>
+    </nav>
+    <button class="btn-header" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+      <span>●</span> Reservar fechas
+    </button>
+  </header>
+
+  <!-- HERO -->
+  <section class="section hero">
+    <div>
+      <div class="tag">
+        <div class="tag-dot"></div>
+        Acciones presenciales · Canal Mercado
+      </div>
+      <h1>
+        Eventos que <span class="highlight">llenan</span><br />
+        los pasillos del mercado
+      </h1>
+      <p class="hero-subtitle">
+        Diseñamos y activamos experiencias de marca dentro de mercados
+        municipales tipo Chamberí para conectar tu producto con un público
+        que compra, prueba y recomienda en el mismo momento de la visita.
+      </p>
+
+      <div class="hero-badges">
+        <div class="badge">
+          <div class="badge-dot"></div>
+          Sampling y degustación en punto de venta
+        </div>
+        <div class="badge">
+          <div class="badge-dot"></div>
+          Dinámicas y sorteos in situ
+        </div>
+        <div class="badge">
+          <div class="badge-dot"></div>
+          Cobertura en pantallas Canal Mercado
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+          Descargar propuesta en PDF →
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('formato').scrollIntoView({behavior:'smooth'})">
+          Ver formato de evento
+        </button>
+      </div>
+
+      <p class="hero-meta">
+        <strong>Ideal para:</strong> lanzamientos de producto, activaciones tácticas,
+        promos temporales y construcción de marca en proximidad.
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div>
+            <div class="hero-market-label">Mercado tipo</div>
+            <div class="hero-market-name">Chamberí, Madrid</div>
+          </div>
+          <div class="hero-card-tag">Evento en pasillos</div>
+        </div>
+
+        <div class="hero-image">
+          <!-- Imagen de gente en mercadillo ibicenco -->
+          <img src="1.jpg" alt="Ambiente de mercado" />
+          <div class="hero-image-overlay"></div>
+          <div class="hero-image-caption">
+            Activación en mercado con público real
+          </div>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-label">Impactos diarios</div>
+            <div class="metric-value">+2.500</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Puntos de contacto</div>
+            <div class="metric-value">Pantallas + Stand</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Duración media</div>
+            <div class="metric-value">1–3 días</div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <div>Plan llave en mano</div>
+          <div>Producción · Staff · Reporte</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ MERCADO -->
+  <section id="porque" class="section section-alt">
+    <div class="tagline">Por qué un mercado tipo Chamberí</div>
+    <h2 class="section-title">El momento de compra es el momento de impacto</h2>
+    <p class="section-intro">
+      Los mercados tradicionales combinan tráfico constante, tiempo de permanencia
+      alto y un entorno gastronómico donde el producto se descubre, se prueba
+      y se compra en el mismo lugar.
+    </p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-label">Tráfico y proximidad</div>
+        <div class="card-title">Afluencia real, no solo impresiones</div>
+        <p class="card-text">
+          Alcanzas a vecinos y visitantes que acuden al mercado a comprar,
+          no a pasear. Impactos de alta calidad en un contexto de decisión
+          de compra.
+        </p>
+        <!-- Imagen catapalillos: degustación / sampling -->
+        <img src="2.jpg" alt="Degustación con palillos" class="img-inline img-inline-small" />
+      </div>
+
+      <div class="card">
+        <div class="card-label">Contexto</div>
+        <div class="card-title">Entorno gastronómico y experiencial</div>
+        <p class="card-text">
+          Puestos de producto fresco, espacios gastronómicos y ocio convierten
+          el mercado en un lugar perfecto para degustaciones, maridajes y
+          demostraciones de producto.
+        </p>
+        <!-- Imagen catavinos: maridajes y catas -->
+        <img src="3.jpg" alt="Cata de vinos en mercado" class="img-inline img-inline-small" />
+      </div>
+
+      <div class="card">
+        <div class="card-label">Cobertura</div>
+        <div class="card-title">Medios propios + presencia física</div>
+        <p class="card-text">
+          Combinamos presencia en las pantallas de Canal Mercado con acciones
+          presenciales en los pasillos para maximizar recuerdo y conversación.
+        </p>
+        <!-- Imagen gentetirsodemolina: otro mercado del circuito -->
+        <img src="4.jpg" alt="Público en Tirso de Molina" class="img-inline img-inline-small" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FRANJA IMPACTO -->
+  <section class="strip">
+    <div>
+      <div class="strip-title">Impacto medible en el punto de venta</div>
+      <p class="strip-text">
+        Diseñamos cada acción para que puedas medir resultados: impactos,
+        muestras entregadas, leads captados y ventas incrementales estimadas
+        durante los días de activación.
+      </p>
+    </div>
+    <div class="strip-metrics">
+      <div class="strip-metric">
+        <div class="strip-metric-value">+25%</div>
+        <div class="strip-metric-label">Recuerdo de marca en test post-evento*</div>
+      </div>
+      <div class="strip-metric">
+        <div class="strip-metric-value">3x</div>
+        <div class="strip-metric-label">Más interacción que punto de venta estático</div>
+      </div>
+      <div class="strip-metric">
+        <div class="strip-metric-value">4–6 h</div>
+        <div class="strip-metric-label">Tiempo medio de activación por día</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATO EVENTO -->
+  <section id="formato" class="section section-alt">
+    <div class="tagline">Formato de evento</div>
+    <h2 class="section-title">Cómo funciona una acción tipo Canal Mercado</h2>
+    <p class="section-intro">
+      Te acompañamos de principio a fin: desde la idea creativa y la selección
+      del mercado hasta la producción, la coordinación con el recinto y la
+      medición de resultados.
+    </p>
+
+    <div class="timeline">
+      <div>
+        <div class="timeline-item-title">1. Diseño del concepto y elección de mercado</div>
+        <p class="timeline-item-text">
+          Definimos objetivo, mensaje y dinámica (degustación, sampling,
+          showcooking, juego, sorteo) y seleccionamos el mercado y las
+          ubicaciones más adecuadas.
+        </p>
+      </div>
+      <div>
+        <div class="timeline-item-title">2. Producción y coordinación</div>
+        <p class="timeline-item-text">
+          Nos encargamos de materiales, permisos, staff y coordinación con
+          el mercado para que el montaje y la activación no interrumpan el
+          funcionamiento de los puestos.
+        </p>
+      </div>
+      <div>
+        <div class="timeline-item-title">3. Activación en pasillos + pantallas</div>
+        <p class="timeline-item-text">
+          Ejecutamos la acción en el mercado, amplificada por las pantallas de
+          Canal Mercado con creatividades adaptadas al entorno y al público.
+        </p>
+      </div>
+      <div>
+        <div class="timeline-item-title">4. Reporte y materiales para tu equipo</div>
+        <p class="timeline-item-text">
+          Recibirás un informe con datos clave, fotografías, aprendizajes y
+          recomendaciones para siguientes activaciones o escalado a otros
+          mercados.
+        </p>
+      </div>
+    </div>
+
+    <!-- Imagen cocina: showcooking / taller -->
+    <img src="5.jpg" alt="Showcooking en mercado" class="img-inline" />
+  </section>
+
+  <!-- CASOS DE USO -->
+  <section id="casos" class="section">
+    <div class="tagline">Casos de uso</div>
+    <h2 class="section-title">Qué puedes hacer en un mercado tipo Chamberí</h2>
+    <p class="section-intro">
+      Adaptamos el formato a tu categoría y objetivos: desde lanzamientos
+      de producto hasta campañas de construcción de marca o activaciones
+      tácticas de corta duración.
+    </p>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-label">Gran consumo</div>
+        <div class="card-title">Lanzamiento de producto</div>
+        <p class="card-text">
+          Degustaciones, recetas en directo, combos con puestos del mercado
+          y mecánicas “compra y participa” para incentivar prueba y repetición.
+        </p>
+        <div class="pill-row">
+          <div class="pill">Alimentación</div>
+          <div class="pill">Bebidas</div>
+          <div class="pill">Snacks</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Marcas locales</div>
+        <div class="card-title">Posicionamiento en barrio</div>
+        <p class="card-text">
+          Activaciones de proximidad para marcas que quieren ganar presencia
+          en el distrito, vinculando su relato al día a día del mercado.
+        </p>
+        <div class="pill-row">
+          <div class="pill">Productores locales</div>
+          <div class="pill">Hostelería</div>
+          <div class="pill">Delivery</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Instituciones</div>
+        <div class="card-title">Campañas informativas y educativas</div>
+        <p class="card-text">
+          Acciones sobre alimentación saludable, sostenibilidad o consumo
+          responsable, con talleres, información y activaciones lúdicas
+          para familias.
+        </p>
+        <div class="pill-row">
+          <div class="pill">Ayuntamientos</div>
+          <div class="pill">Organismos</div>
+          <div class="pill">ONG</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="contacto" class="section section-alt">
+    <div class="cta-final">
+      <h2>¿Hablamos de tu próximo evento en mercado?</h2>
+      <p>
+        Cuéntanos tu objetivo y te proponemos un formato de acción presencial
+        en mercados tipo Chamberí, integrado con las pantallas de Canal Mercado
+        y listo para presentar a tu cliente.
+      </p>
+      <button class="btn-primary">
+        Solicitar propuesta y fechas →
+      </button>
+      <small>
+        También podemos adaptarlo a otros mercados del circuito Canal Mercado.
+      </small>
+    </div>
+  </section>
+
+  <footer>
+    <div>© Canal Mercado · Acciones presenciales en mercados municipales</div>
+    <div>Presentación web scroll · Exportable a PDF desde el navegador</div>
+  </footer>
+</body>
+</html>
